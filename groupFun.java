@@ -6,6 +6,8 @@ public class groupFun implements sysEntry
     private String sysEntryType;
     ArrayList<String> groupEntry;
 
+    
+
 
 
     public groupFun(String groupID, String sysEntryType)
@@ -30,7 +32,7 @@ public class groupFun implements sysEntry
 
     }
 
-    public void deleteUser(String userID) //will be able to add user ids to this group. will have the same group id
+    public void deleteUser(String userID) 
     {
         this.groupEntry.remove(userID);
 

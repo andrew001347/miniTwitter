@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import javax.swing.JTextArea;
 
 
@@ -17,6 +18,16 @@ public class javaGUI extends JFrame
 
     javaGUI()
     {
+    
+    DefaultMutableTreeNode myRoot = new DefaultMutableTreeNode("Root");
+    JTree myTree = new JTree(myRoot);
+    this.add(myTree);
+    myTree.setBounds(5,10,380,290);
+
+
+
+
+
     JTextArea nameUser= new JTextArea();  
     nameUser.setBounds(400, 10,180,30);   
 
@@ -38,7 +49,7 @@ public class javaGUI extends JFrame
 
     JButton openUserView = new JButton("Open User View");
     openUserView.setBounds(400, 100,180,30);
-    openUserView.addActionListener(e-> System.out.println("Open User View"));
+    openUserView.addActionListener(e->new userGUI());
 
 
 
@@ -90,6 +101,9 @@ public class javaGUI extends JFrame
 
 
         /*
+
+        Testing:
+        
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         

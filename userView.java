@@ -5,7 +5,15 @@ import java.util.List;
 
 public class userView implements sysEntry
 {
-    private List<sysEntry> showIDtype = new ArrayList<sysmEntry>();
+    private List<sysEntry> showIDtype = new ArrayList<sysEntry>();
+
+
+    
+    @Override
+    public void showEntryType() {
+        // TODO Auto-generated method stub
+        
+    }
 
     
 }

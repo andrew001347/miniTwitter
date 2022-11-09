@@ -8,6 +8,7 @@ public class Main {
         javaGUI miniTwitter = new javaGUI();
 
         AdminView.getAdminView();
+        
     }
     
 }
