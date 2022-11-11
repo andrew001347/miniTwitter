@@ -13,16 +13,9 @@ public class userGUI extends JFrame
     JLabel jl = new JLabel();
 
     JTextField jt = new JTextField(30);
-    
-
-    
-    JButton followUser = new JButton("Post Message");
-    followUser.setBounds();
-
     JButton jb = new JButton("Post Message");
-    jb.setBounds();
 
-    
+
     public userGUI()
     {
         setTitle(/*userID*/"UserID");
@@ -53,12 +46,22 @@ public class userGUI extends JFrame
             }
         });
 
+            
+        JButton followUser = new JButton("Follow+");
+        followUser.setBounds(250,10,180,30);
+
         
+        jb.setBounds(250,50,180,30);
+
+
+        jp.add(followUser);
         jp.add(jl);
         add(jp);
 
         setVisible(true);
 
     }
+
+
     
 }

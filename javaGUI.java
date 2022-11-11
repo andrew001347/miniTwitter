@@ -1,7 +1,7 @@
 import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-
+import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JTree;
@@ -11,32 +11,107 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import javax.swing.JTextArea;
+import javax.swing.tree.*;
 
+import java.awt.*;
+import java.awt.event.*;
 
-public class javaGUI extends JFrame 
+public class javaGUI extends JFrame implements ActionListener
 {
+    
+    int count = 0;
+
+    DefaultMutableTreeNode myRoot, parent, child, node;
+    JTree tree;
+    Container container;
+    JButton add, remove;
+    JPanel buttonsPanel;
+    TreePath treePath;
+    int index;
 
     javaGUI()
     {
-    
-    DefaultMutableTreeNode myRoot = new DefaultMutableTreeNode("Root");
+    /* 
+    myRoot = new DefaultMutableTreeNode("Root");
     JTree myTree = new JTree(myRoot);
     this.add(myTree);
     myTree.setBounds(5,10,380,290);
 
+    parent = new DefaultMutableTreeNode("3560");
+
+    child = new DefaultMutableTreeNode("Andrew");
+    parent.add(child);
+
+    child = new DefaultMutableTreeNode("Kim");
+    parent.add(child);
+
+    myRoot.add(parent);
+
+    parent = new DefaultMutableTreeNode("3010");
+
+    child = new DefaultMutableTreeNode("Michael");
+    parent.add(child);
+
+    myRoot.add(parent);
+*/
+
+super("JTree Event Demo");
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myRoot = new DefaultMutableTreeNode("Root");
+
+        parent = new DefaultMutableTreeNode("3560");
+
+        child = new DefaultMutableTreeNode("Andrew");
+        parent.add(child);
+
+        child = new DefaultMutableTreeNode("Kim");
+        parent.add(child);
+
+        myRoot.add(parent);
+
+        parent = new DefaultMutableTreeNode("3110");
+
+        child = new DefaultMutableTreeNode("Mike");
+        parent.add(child);
+
+        myRoot.add(parent);
+
+        tree = new JTree(myRoot);
+
+        add = new JButton("Add");
+        add.addActionListener(this);
+        remove = new JButton("Remove");
+        remove.addActionListener(this);
+
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(add);
+        buttonsPanel.add(remove);
 
 
-
-
-    JTextArea nameUser= new JTextArea();  
-    nameUser.setBounds(400, 10,180,30);   
-
-
-
-    JButton userButton = new JButton("Add User");
+    /* JButton userButton = new JButton("Add User");
     userButton.setBounds(600, 10,180,30);
-    userButton.addActionListener(e-> System.out.println("Add User Button."));
+    
+    remove = new JButton("Remove");
+        remove.addActionListener(this);
+         add = new JButton("Add User/Group");
+    add.setBounds(400, 10,180,30); 
+*/
 
+
+        add = new JButton("Add");
+        add.setBounds(400, 10,180,30); 
+        add.addActionListener(this);
+
+        
+        remove = new JButton("Remove");
+        remove.addActionListener(this);
+        remove.setBounds(600, 10,180,30);
+
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(add);
+        buttonsPanel.add(remove);
+   
 
     JTextArea nameGroup= new JTextArea();  
     nameGroup.setBounds(400, 50,180,30);
@@ -51,7 +126,9 @@ public class javaGUI extends JFrame
     openUserView.setBounds(400, 100,180,30);
     openUserView.addActionListener(e->new userGUI());
 
-
+    JButton deleteUser = new JButton("Open User View");
+    deleteUser.setBounds(600, 100,180,30);
+    deleteUser.addActionListener(e->new userGUI());
 
     JButton userTotalButton = new JButton("View User Total");
     userTotalButton.setBounds(400, 240,180,30);
@@ -80,12 +157,9 @@ public class javaGUI extends JFrame
     this.setSize(800,350);
     this.setVisible(true);
 
-    this.add(nameUser);
-    this.add(userButton);
-
-    this.add(nameGroup);
-    this.add(groupButton);
-
+   
+    this.add(add);
+    this.add(remove);
     this.add(openUserView);
     this.add(groupTotalButton);
 
@@ -95,10 +169,6 @@ public class javaGUI extends JFrame
 
     this.add(showMessbutton);
     this.add(showPosPer);
-
-    
-
-
 
         /*
 
@@ -116,11 +186,6 @@ public class javaGUI extends JFrame
         JButton showPosPer = new JButton("Show Positive Percentage");
         
         panel.setLayout(new GroupLayout());
-
-
-
-
-
 
 
 
@@ -161,7 +226,44 @@ public class javaGUI extends JFrame
          */
 
     }
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == add)
+         {
+            DefaultMutableTreeNode SelectedNode;
 
+            treePath = tree.getSelectionPath();
+            SelectedNode = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+            index = SelectedNode.getIndex(SelectedNode) + 1;
 
+            String NodeStr = JOptionPane.showInputDialog(this,"Enter a User/Group Name", "User/Group Name",JOptionPane.QUESTION_MESSAGE);
+
+            node = new DefaultMutableTreeNode(NodeStr);
+            SelectedNode.insert(node, index);
+            tree.updateUI();
+        } 
+        else if (e.getSource() == remove) 
+        {
+            int val = JOptionPane.showConfirmDialog(buttonsPanel,"Delete User/Group Name?");
+            if (val == 0) 
+            {
+                DefaultMutableTreeNode SelectedNode;
+
+                treePath = tree.getSelectionPath();
+                SelectedNode = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+                if (SelectedNode.isLeaf()) 
+                {
+                    parent = (DefaultMutableTreeNode) SelectedNode.getParent();
+                    parent.remove(SelectedNode);
+                    tree.updateUI();
+                } 
+                else 
+                {
+                    JOptionPane.showMessageDialog(this, "Unable to Remove");
+                }
+            }
+        }
+
+    }
     
 }

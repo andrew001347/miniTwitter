@@ -14,6 +14,7 @@ public class AdminView
     {
         return AdminViewHelper.innerInstance;
     }
+    
 }
 
 
@@ -25,8 +26,10 @@ public class AdminView
  * 
  * Composite for the user groups
 Observer for following/updating feeds 
-Visitor for updating stuffs (edited)
+Visitor for updating stuffs (edited) used to traverse the tree
+list.<IuserCluber>add
 
+cluster has user and usergroup
 He didn’t say what to use singleton for but I assume make the admin control panel a singleton
 
 
