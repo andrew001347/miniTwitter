@@ -1,23 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class MessagePublisher implements Subject
+class MessagePublisher implements Subject
 {
-    private List<Observer> observers = new ArrayList<>();
+    private String tweet;
 
-    @Override
-    public void attach(Observer o) {
-        // TODO Auto-generated method stub
-        
+    public MessagePublisher(String message)
+    {
+        this.tweet=message;
+
+    }
+
+    public String getTweet()
+    {
+        return tweet;
     }
 
     @Override
-    public void detach(Observer o) {
-        // TODO Auto-generated method stub
-        
+    public String accept(Visitor visitor) 
+    {
+       return visitor.visit(this);
     }
-
-
     
-
 }

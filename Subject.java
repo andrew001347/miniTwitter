@@ -1,7 +1,7 @@
-public interface Subject 
+interface Subject 
 {
-    public void attach(Observer o);
-    public void detach(Observer o);
-    //public void notify(Message m);
+  public String accept(Visitor visitor);
+  
+	
     
 }

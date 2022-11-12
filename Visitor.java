@@ -1,8 +1,11 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-
-public class Observer
+public interface Visitor 
 {
-
+    public void update();
+    public void setSubject(Subject sub);
+    public String visit(MessagePublisher messagePublisher);
     
 }
 

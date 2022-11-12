@@ -10,6 +10,7 @@ import javax.swing.JButton;
 
 import javax.swing.JFrame;
 import javax.swing.tree.*;
+import javax.swing.JPanel;
 
 
 import java.awt.*;
@@ -17,7 +18,8 @@ import java.awt.event.*;
 
 public class javaGUI extends JFrame implements ActionListener
 {
-    DefaultMutableTreeNode root, parent, child, node;
+    DefaultMutableTreeNode root, parent, child;
+    DefaultMutableTreeNode node;
     JTree tree;
     java.awt.Container container;
     JButton add, remove, userTotal,userView,groupTotal,messTotal;
@@ -36,16 +38,6 @@ public class javaGUI extends JFrame implements ActionListener
         parent = new DefaultMutableTreeNode("3560");
 
         child = new DefaultMutableTreeNode("Andrew");
-        parent.add(child);
-
-        child = new DefaultMutableTreeNode("Kim");
-        parent.add(child);
-
-        root.add(parent);
-
-        parent = new DefaultMutableTreeNode("3010");
-
-        child = new DefaultMutableTreeNode("Mike");
         parent.add(child);
 
         root.add(parent);
@@ -83,14 +75,16 @@ public class javaGUI extends JFrame implements ActionListener
         container.add(new JScrollPane(tree));
         container.add(buttonsPanel, BorderLayout.SOUTH);
 
+
         setSize(800, 350);
         setVisible(true);
     }
     public void actionPerformed(ActionEvent ae)
     {
-        count++;
+    
         if (ae.getSource() == add)
          {
+            count++;
             DefaultMutableTreeNode SelectedNode;
 
             treePath = tree.getSelectionPath();
@@ -128,8 +122,13 @@ public class javaGUI extends JFrame implements ActionListener
 
         else if (ae.getSource() == userTotal) 
         {
-            
+            for (int i = 0; i < tree.getRowCount(); i++)
+            {
+                tree.expandRow(i);
+            }
+            JOptionPane.showMessageDialog(this, "Number of Users: " + parent.getChildCount());
 
+           
         }
 
         
@@ -141,13 +140,18 @@ public class javaGUI extends JFrame implements ActionListener
         
         else if (ae.getSource() == groupTotal) 
         {
+            for (int i = 0; i < tree.getRowCount(); i++)
+            {
+                tree.expandRow(i);
+            }
+            JOptionPane.showMessageDialog(this, "Number of Groups: " + parent.getChildCount());
 
         }
 
 
         else if (ae.getSource() == messTotal) 
         {
-            
+            JOptionPane.showMessageDialog(this, "Number of Messages: 1");
 
         }
 
@@ -155,6 +159,7 @@ public class javaGUI extends JFrame implements ActionListener
         
 
     }
+  
     
 }
 

@@ -4,16 +4,16 @@ public class groupFun implements sysEntry
 {
     private String groupID;
     private String sysEntryType;
-    ArrayList<String> groupEntry;
+    private ArrayList<String> groupEntry;
 
-    
-
+    private boolean changed;
 
 
     public groupFun(String groupID, String sysEntryType)
     {
         this.groupID=groupID;
         this.sysEntryType=sysEntryType;
+        this.groupEntry=new ArrayList<>();
 
     }
 
@@ -26,16 +26,44 @@ public class groupFun implements sysEntry
         
     }
 
-    public void addUser(String userID) //will be able to add user ids to this group. will have the same group id
-    {
-        this.groupEntry.add(userID);
 
+
+    @Override
+    public void attach(sysEntry obj)
+     {
+        this.groupEntry.add(sysEntryType);
+        
     }
 
-    public void deleteUser(String userID) 
-    {
-        this.groupEntry.remove(userID);
 
+
+    @Override
+    public void detach(sysEntry obj) 
+    {
+        this.groupEntry.remove(obj);
+        
+    }
+
+
+
+    @Override
+    public void notifyObservers() 
+    {
+        if(!changed)
+        {
+            return;
+        }
+
+        this.changed=false;
+        
+    }
+
+
+
+    @Override
+    public Object getUpdate(sysEntry obj)
+    {
+       return this.groupID;
     }
 
 

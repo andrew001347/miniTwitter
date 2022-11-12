@@ -18,7 +18,7 @@ public class userGUI extends JFrame
 
     public userGUI()
     {
-        setTitle(/*userID*/"UserID");
+        setTitle(/*userID*/"Kim");
         
         setSize(400,400);
 
@@ -61,7 +61,6 @@ public class userGUI extends JFrame
         setVisible(true);
 
     }
-
 
     
 }

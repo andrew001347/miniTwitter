@@ -11,6 +11,8 @@ public class userFun implements sysEntry
 
     ArrayList<String> postMessages;
 
+    private boolean changed;
+
 
     public userFun(String userID, String sysEntryType)
     {
@@ -24,20 +26,6 @@ public class userFun implements sysEntry
        System.out.print(userID+ " and "+sysEntryType);
         
     }
-
-    public void addUser(String userID) //tracks who is following who
-    {
-        this.followerList.add(userID);
-
-    }
-
-    public void deleteUser(String userID) //will be able to add user ids to this group. will have the same group id
-    {
-        this.followerList.remove(userID);
-
-    }
-
-
 
     public void addfollowing(String userID) //
     {
@@ -59,14 +47,35 @@ public class userFun implements sysEntry
         
     }
 
-    public ArrayList<String> addPostMessages(String userID, String message) //adding contents
-    {
 
-        String entry = userID + ": " + message;
+    @Override
+    public void attach(sysEntry obj)
+     {
+        this.followerList.add(userID);
+        
+    }
+
+    @Override
+    public void detach(sysEntry obj) 
+    {
+        this.followerList.remove(userID);
+        
+    }
+
+    @Override
+    public void notifyObservers() 
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Object getUpdate(sysEntry obj)
+     {
+        String entry = userID + ": " + sysEntryType;
         this.postMessages.add(entry);
 
         return followerList;
-        
     }
     
 
