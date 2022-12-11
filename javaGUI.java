@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
-import java.util.Map;
+
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,16 +16,15 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.awt.*;
-import java.awt.event.*;
+
 
 public class javaGUI extends JFrame implements ActionListener
 {
     DefaultMutableTreeNode root, parent, child;
-    DefaultMutableTreeNode node;
+    static DefaultMutableTreeNode node;
     JTree tree;
     java.awt.Container container;
-    JButton add, remove, userTotal,userView,groupTotal,messTotal,duplicate,lastUpdated;
+    JButton add, remove, userTotal,userView,groupTotal,messTotal,duplicate,created,lastUpdated;
     JPanel buttonsPanel;
     TreePath treePath;
     int index;
@@ -47,23 +46,20 @@ public class javaGUI extends JFrame implements ActionListener
 
         child = new DefaultMutableTreeNode("Andrew");
         DefaultMutableTreeNode child_data = new DefaultMutableTreeNode();
+        //creating time for root
         String[] times = new String[3];
-        //index 1 = createdtime
-        //index 2 = updatedTime
         times[0] = "Root";
         times[1] = String.valueOf(System.currentTimeMillis());
         times[2] = String.valueOf(System.currentTimeMillis());
 
+        //creating time for 3560
         String[] times2 = new String[3];
-        //index 1 = createdtime
-        //index 2 = updatedTime
-        times2[0] = "3650";
+        times2[0] = "3560";
         times2[1] = String.valueOf(System.currentTimeMillis());
         times2[2] = String.valueOf(System.currentTimeMillis());
 
+        //creating time for Andrew
         String[] times3 = new String[3];
-        //index 1 = createdtime
-        //index 2 = updatedTime
         times3[0] = "Andrew";
         times3[1] = String.valueOf(System.currentTimeMillis());
         times3[2] = String.valueOf(System.currentTimeMillis());
@@ -86,7 +82,7 @@ public class javaGUI extends JFrame implements ActionListener
         add = new JButton("Add User/Group");
         add.addActionListener(this);
 
-        duplicate = new JButton("Duplicates?");
+        duplicate = new JButton("Validate?");
         duplicate.addActionListener(this);
 
         remove = new JButton("Remove User/Group");
@@ -105,6 +101,9 @@ public class javaGUI extends JFrame implements ActionListener
         messTotal = new JButton("Message Total");
         messTotal.addActionListener(this);
 
+        created = new JButton("Creation TIme");
+        created.addActionListener(this);
+
         lastUpdated = new JButton("Last Updated User");
         lastUpdated.addActionListener(this);
         
@@ -120,6 +119,7 @@ public class javaGUI extends JFrame implements ActionListener
         buttonsPanel.add(groupTotal);
         buttonsPanel.add(messTotal);  
 
+        buttonsPanel.add(created);  
         buttonsPanel.add(lastUpdated);
 
 
@@ -128,9 +128,18 @@ public class javaGUI extends JFrame implements ActionListener
         container.add(buttonsPanel, BorderLayout.SOUTH);
 
 
-        setSize(1000, 350);
+        setSize(1250, 350);
         setVisible(true);
     }
+
+
+    public Object getNodeName()
+    {
+        return node;
+    }
+
+    
+
     public void actionPerformed(ActionEvent ae)
     {
     
@@ -150,8 +159,7 @@ public class javaGUI extends JFrame implements ActionListener
             node = new DefaultMutableTreeNode(NodeStr);
             DefaultMutableTreeNode node_data = new DefaultMutableTreeNode();
             String[] times = new String[3];
-            //index 0 = createdtime
-            //index 1 = updatedTime
+
             times[0] = NodeStr;
             times[1] = String.valueOf(System.currentTimeMillis());
             times[2] = String.valueOf(System.currentTimeMillis());
@@ -173,7 +181,7 @@ public class javaGUI extends JFrame implements ActionListener
               TreeNode node = e.nextElement();
               if(uniqueUsers.contains(node.toString()) || node.toString().contains(" ") || node.toString().length() == 0)
               {
-                  JOptionPane.showMessageDialog(this, "Duplicates Found");
+                  JOptionPane.showMessageDialog(this, "Duplicates Found or Invalid UserName Syntax");
                   valid = false;
                   break;
               }
@@ -182,7 +190,7 @@ public class javaGUI extends JFrame implements ActionListener
               }
             } 
             if (valid) {
-            JOptionPane.showMessageDialog(this, "No duplicates");
+            JOptionPane.showMessageDialog(this, "Everything is good!");
             }
 
         }
@@ -223,6 +231,8 @@ public class javaGUI extends JFrame implements ActionListener
         
         else if (ae.getSource() == userView) 
         {
+            TreePath path = tree.getSelectionPath();
+            Object lastNode = path.getLastPathComponent();
             new userGUI();
         }
 
@@ -245,19 +255,13 @@ public class javaGUI extends JFrame implements ActionListener
         }  
 
 
-        else if (ae.getSource() == lastUpdated) 
+        else if (ae.getSource() == created) 
         {
             Enumeration<TreeNode> e = root.depthFirstEnumeration();
             String lastUpdatedUser = "";
             long lastUpdatedTime = -1;
             for (int i = 0; i < userList.size(); i++)
              {
-            //   TreeNode node = e.nextElement();
-            //   String name = node.toString();
-            //   DefaultMutableTreeNode defaultNode = (DefaultMutableTreeNode) node;
-              //Object obj = defaultNode.getUserObject();
-              //long[] times = (long[]) obj;
-              //System.out.println(times[1]);
               Object obj = userList.get(i).getUserObject();
               String[] data = (String[]) obj;
               System.out.println(data[0]);
@@ -268,9 +272,16 @@ public class javaGUI extends JFrame implements ActionListener
                 lastUpdatedTime = updatedtime;
               }
             } 
-            JOptionPane.showMessageDialog(this, "Last updated user: " + lastUpdatedUser);
+            JOptionPane.showMessageDialog(this, "Last created user: " + lastUpdatedUser);
             
 
+        }  
+
+        else if (ae.getSource() == lastUpdated) 
+        {
+            userGUI.addActionListener(new MyActionListener());
+            JOptionPane.showMessageDialog(this,"Last updated user: " +node);
+            
         }  
 
 

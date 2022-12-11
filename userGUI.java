@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import javax.swing.tree.TreePath;
+
 public class userGUI extends JFrame 
 {
 
@@ -14,10 +16,12 @@ public class userGUI extends JFrame
 
     JTextField jt = new JTextField(30);
     JButton jb = new JButton("Post Message");
-
+    
 
     public userGUI()
     {
+        super();
+        
         setTitle(/*userID*/"Kim");
         
         setSize(400,400);
@@ -59,6 +63,12 @@ public class userGUI extends JFrame
         add(jp);
 
         setVisible(true);
+
+    }
+
+    //post button must be pressed first
+    public static void addActionListener(MyActionListener myActionListener) 
+    {
 
     }
 
